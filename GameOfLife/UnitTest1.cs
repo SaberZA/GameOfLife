@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
 namespace GameOfLife
 {
@@ -8,20 +8,18 @@ namespace GameOfLife
         Any live cell with more than three live neighbours dies, as if by overcrowding.
         Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
      */
-    [TestClass]
+    [TestFixture]
     public class UnitTest1
     {
         private Game _game;
 
-        [TestInitialize]
+        [TestFixtureSetUp]
         public void BeforeTest()
         {
             _game = new Game(10);
         }
-
         
-
-        [TestMethod]
+        [Test]
         public void Construct_Game()
         {
             //---------------Set up test pack-------------------
@@ -34,7 +32,7 @@ namespace GameOfLife
             Assert.IsNotNull(_game);
         }
         
-        [TestMethod]
+        [Test]
         public void SetBoard_GivenArrayWithSize20_ShouldReturn2DArrayWithSize20()
         {
             //---------------Set up test pack-------------------
@@ -49,7 +47,7 @@ namespace GameOfLife
             Assert.AreEqual(20, _game.Height);
         }
 
-        [TestMethod]
+        [Test]
         public void Toggle_GivenCoordinate0And0_ShouldReturnPosition0And0As1()
         {
             //---------------Set up test pack-------------------
@@ -63,7 +61,7 @@ namespace GameOfLife
             Assert.AreEqual(1,mapValue);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasFewerThanTwoNeghbours_Given1And1_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
@@ -77,7 +75,7 @@ namespace GameOfLife
             Assert.IsTrue(hasFewerThanTwoNeighbours);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasFewerThanTwoNeighbours_GivenAllAround1And1_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
@@ -98,7 +96,7 @@ namespace GameOfLife
             Assert.IsFalse(hasFewerThanTwoNeighbours);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasTwoOrThreeNighbours_GivenPointsAround1And1_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
@@ -114,7 +112,7 @@ namespace GameOfLife
             Assert.IsTrue(hasTwoOrThreeNeighbours);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasMoreThan3Neighbours_GivenPointsAround1And1_ShouldReturnFalse()
         {
             //---------------Set up test pack-------------------
@@ -130,7 +128,7 @@ namespace GameOfLife
             Assert.IsFalse(hasMoreThanThreeNeighbours);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasMoreThan3Neighbours_GivenPointsAround1And1_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
@@ -150,7 +148,7 @@ namespace GameOfLife
             Assert.IsTrue(hasMoreThanThreeNeighbours);
         }
 
-        [TestMethod]
+        [Test]
         public void PointHasExactlyThreeNeighboursAndIsDead_Given1And1_ShouldReturnTrue()
         {
             //---------------Set up test pack-------------------
@@ -166,7 +164,7 @@ namespace GameOfLife
             Assert.IsTrue(hasThreeNeighboursAndIsDead);
         }
 
-        [TestMethod]
+        [Test]
         public void PointShouldDie_Given1And1WithFewerThanTwoNeighbours_ShouldReturn0()
         {
             //---------------Set up test pack-------------------
@@ -179,6 +177,19 @@ namespace GameOfLife
             _game.Proc();
             //---------------Test Result -----------------------
             Assert.AreEqual(0,_game.ValueOfPoint(1,1));
+        }
+
+        [Test]
+        public void Method_Givenx_Shouldy()
+        {
+            //---------------Set up test pack-------------------
+            
+            //---------------Assert Precondition----------------
+
+            //---------------Execute Test ----------------------
+
+            //---------------Test Result -----------------------
+            Assert.Fail("Test Not Yet Implemented");
         }
     }
 }

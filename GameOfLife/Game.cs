@@ -72,29 +72,40 @@
 
                     if (PointHasFewerThanTwoNeighbours(colIndex, rowIndex))
                     {
-                        Toggle(colIndex, rowIndex);
+                        //Toggle(colIndex, rowIndex);
+                        SetPointOff(colIndex, rowIndex);
                         continue;
                     }
                     if (PointHasTwoOrThreeNighbours(colIndex, rowIndex))
                     {
-                        Toggle(colIndex, rowIndex);
+                        //Toggle(colIndex, rowIndex);
+                        SetPointOn(colIndex, rowIndex);
                         continue;
                     }
                     if (PointHasMoreThanThreeNeighbours(colIndex, rowIndex))
                     {
-                        Toggle(colIndex, rowIndex);
+                        //Toggle(colIndex, rowIndex);
+                        SetPointOff(colIndex, rowIndex);
                         continue;
                     }
                     if (PointHasThreeNeighboursAndIsDead(colIndex, rowIndex))
                     {
-                        Toggle(colIndex, rowIndex);
+                        //Toggle(colIndex, rowIndex);
+                        SetPointOn(colIndex, rowIndex);
                         continue;
                     }
                 }
             }
+        }
 
-            
-            
+        private void SetPointOn(int colIndex, int rowIndex)
+        {
+            Board[colIndex][rowIndex] = 1;
+        }
+
+        private void SetPointOff(int colIndex, int rowIndex)
+        {
+            Board[colIndex][rowIndex] = 0;
         }
     }
 }
