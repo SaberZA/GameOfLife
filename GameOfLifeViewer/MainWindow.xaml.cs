@@ -34,7 +34,7 @@ namespace GameOfLifeViewer
         public MainWindow()
         {
             InitializeComponent();
-            _timer = new Timer(500);
+            _timer = new Timer(100);
             _timer.Elapsed += (s,e) => Progress();
         }
 
@@ -54,6 +54,9 @@ namespace GameOfLifeViewer
             btnProc.Click += btnProc_Click;
             btnProc.Content = "Proc";
 
+            var btnStop = new Button();
+            btnStop.Click += BtnStopOnClick;
+
             _canvas.Children.Add(btnProc);
             Canvas.SetLeft(btnProc, 165);
             Canvas.SetTop(btnProc, 380);
@@ -61,6 +64,12 @@ namespace GameOfLifeViewer
             this.Content = _canvas;
             Draw();
             CanToggleBlock = true;
+        }
+
+        private void BtnStopOnClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            if (_timer == null) return;
+            _timer.Stop();
         }
 
         private void Draw()
@@ -76,8 +85,8 @@ namespace GameOfLifeViewer
                     rect.Rectangle.Fill = _game.ValueOfPoint(col, row) == 1
                         ? new SolidColorBrush(Colors.Black)
                         : new SolidColorBrush(Colors.White);
-                    rect.Rectangle.Width = 30;
-                    rect.Rectangle.Height = 30;
+                    rect.Rectangle.Width = Width/_game.Size;
+                    rect.Rectangle.Height = Height/_game.Size;
                     rect.Rectangle.Stroke = new SolidColorBrush(Colors.Green);
                     Canvas.SetLeft(rect.Rectangle, col * 30);
                     Canvas.SetTop(rect.Rectangle, row * 30);
@@ -106,8 +115,35 @@ namespace GameOfLifeViewer
 
         private void Progress()
         {
-            _game.Proc();
-            Dispatcher.Invoke(Draw);
+            _timer.Stop();
+            for (int colIndex = 0; colIndex < _game.Board.Length; colIndex++)
+            {
+                int[] col = _game.Board[colIndex];
+                Dispatcher.Invoke(Draw);
+                for (int rowIndex = 0; rowIndex < col.Length; rowIndex++)
+                {
+                    Dispatcher.Invoke(Draw);
+                    if (_game.PointHasFewerThanTwoNeighbours(colIndex, rowIndex))
+                    {
+                        _game.SetPointOff(colIndex, rowIndex);
+                    }
+                    else if (_game.PointHasTwoOrThreeNighbours(colIndex, rowIndex))
+                    {
+                        _game.SetPointOn(colIndex, rowIndex);
+                    }
+                    else if (_game.PointHasMoreThanThreeNeighbours(colIndex, rowIndex))
+                    {
+                        _game.SetPointOff(colIndex, rowIndex);
+                    }
+                    else if (_game.PointHasThreeNeighboursAndIsDead(colIndex, rowIndex))
+                    {
+                        _game.SetPointOn(colIndex, rowIndex);
+                    }
+                    
+                }
+            }
+
+            _timer.Start();
         }
     }
 

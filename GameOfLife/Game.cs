@@ -8,7 +8,7 @@
         }
 
         public int Size { get { return Board.Length; }}
-        protected int[][] Board { get; set; }
+        public int[][] Board { get; set; }
 
         public int Width
         {
@@ -68,8 +68,6 @@
                 int[] col = Board[colIndex];
                 for (int rowIndex = 0; rowIndex < col.Length; rowIndex++)
                 {
-                    int row = col[rowIndex];
-
                     if (PointHasFewerThanTwoNeighbours(colIndex, rowIndex))
                     {
                         //Toggle(colIndex, rowIndex);
@@ -98,12 +96,12 @@
             }
         }
 
-        private void SetPointOn(int colIndex, int rowIndex)
+        public void SetPointOn(int colIndex, int rowIndex)
         {
             Board[colIndex][rowIndex] = 1;
         }
 
-        private void SetPointOff(int colIndex, int rowIndex)
+        public void SetPointOff(int colIndex, int rowIndex)
         {
             Board[colIndex][rowIndex] = 0;
         }
